@@ -1,0 +1,67 @@
+<!-- ajax 取消请求 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<style>
+    #result{
+        width: 200px;
+        height: 400px;
+        border: 1px solid black;
+    }
+</style>
+
+<body>
+    <button id="button">get</button>
+    <button id="button">post</button>
+    <button id="button">通用</button>
+    <div id="result"></div>
+</body>
+<script>
+    $('button').eq(0).click(()=>{
+        // 1. 给谁发 2. 发送对象 3. 回调函数 4. 响应类型
+        $.get('http://127.0.0.1:8000/jquery',{a: 100,b:200},(data)=>{
+            console.log(data);
+        },'json')
+    })
+    $('button').eq(1).click(()=>{
+        // 1. 给谁发 2. 发送对象 3. 回调函数
+        $.post('http://127.0.0.1:8000/jquery',{a: 100,b:200},(data)=>{
+            console.log(data);
+        })
+    })
+    $('button').eq(2).click(()=>{
+        // 1. 给谁发 2. 发送对象 3. 回调函数
+        $.ajax({
+            // url
+            url: 'http://127.0.0.1:8000/jquery',
+            data: {
+                a: 100,
+                b:200
+            },
+            type: 'GET',
+            // 响应体结果
+            dataType: "json",
+            // 成功的回掉
+            success: (data)=>{
+                console.log(data);
+            },
+            timeout: "2000",
+            error: ()=>{
+                console.log('没网了');
+            },
+            // 头信息
+            headers: {
+                a: 200,
+                b: 300
+            }
+
+        })
+    })
+ </script>
+</html>
