@@ -9,7 +9,13 @@ app.get('/server',(req,res)=>{
 // 设置响应头 设置允许跨域
     res.setHeader('Access-Control-Allow-Origin','*')
     res.send('hello ajax')
+
 })
+app.post('/server',(req,res)=>{
+    // 设置响应头 设置允许跨域
+        res.setHeader('Access-Control-Allow-Origin','*')
+        res.send('hello ajax post')    
+    })
 app.listen(8000,()=>{
     console.log(`listen on localhost:8000`);
 })

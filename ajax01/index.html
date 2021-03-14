@@ -26,7 +26,7 @@
         // 1. 创建ajax请求的对象
         const xhr = new XMLHttpRequest()
         // 2. 初始化 设置请求的方法和url
-        xhr.open('GET','http://127.0.0.1:8000/server')
+        xhr.open('GET','http://127.0.0.1:8000/server?a=100&b=200&c=300')
         // 3. 发送请求
         xhr.send();
         // 4. 事件棒冰处理服务端返回结果 当 状态 ready的时候

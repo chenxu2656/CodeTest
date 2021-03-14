@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax post</title>
+</head>
+<style>
+    #result{
+        width: 100px;
+        height: 200px;
+        border: 1px solid black;
+    }
+</style>
+<body>
+    <div id="result">
+<!-- 鼠标悬浮发post请求   -->
+    </div>
+</body><script>
+    let result = document.getElementById('result')
+    result.addEventListener('mouseover',()=>{
+        // console.log('test d');
+        // create object
+        const xhr = new XMLHttpRequest()
+        // 初始化
+        xhr.open('POST','http://127.0.0.1:8000/server')
+        xhr.send()
+    xhr.onreadystatechange = ()=>{
+        if(xhr.readyState===4){
+            if(xhr.status>=200 && xhr.status < 300){
+                console.log(xhr.status); //状态码
+                    console.log(xhr.statusText); //响应字符串
+                    console.log(xhr.getAllResponseHeaders()); //所有的响应头
+                    console.log(xhr.response); //响应体
+                    result.innerHTML = xhr.response
+                    // 第一次运行会报跨域错误 因为没有为post设置请求头
+            }
+        }
+    }
+    })
+</script>
+</html>
