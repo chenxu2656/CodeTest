@@ -1,3 +1,8 @@
+<!-- 超时与网络异常处理 
+进行一个异常设置  当超时进行提醒
+
+如果两秒还没返回数据进行提示
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,24 +28,34 @@
         // console.log('test d');
         // create object
         const xhr = new XMLHttpRequest()
+        // 增加一个超时设置
+        xhr.timeout = 2000
+        // 超时回掉
+        xhr.ontimeout = ()=>{
+            alert('qing qiu chaoshi ')
+        }
+        // 网络异常
+        xhr.onerror = ()=>{
+            console.log('没网了');
+        }
         // 初始化
-        xhr.open('POST','http://127.0.0.1:8000/server')
+        xhr.open('GET','http://127.0.0.1:8000/await')
         // 设置请求头
         /**
          * content-type: 设置请求头类型 固定写法
         */
         xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
         // 可以添加自定义的头 浏览器会有安全机制 不能发
-        xhr.setRequestHeader('name','test')
+        // xhr.setRequestHeader('name','test') 
 
         xhr.send()
     xhr.onreadystatechange = ()=>{
         if(xhr.readyState===4){
             if(xhr.status>=200 && xhr.status < 300){
                 console.log(xhr.status); //状态码
-                    console.log(xhr.statusText); //响应字符串
-                    console.log(xhr.getAllResponseHeaders()); //所有的响应头
-                    console.log(xhr.response); //响应体
+                    // console.log(xhr.statusText); //响应字符串
+                    // console.log(xhr.getAllResponseHeaders()); //所有的响应头
+                    // console.log(xhr.response); //响应体
                     result.innerHTML = xhr.response
                     // 第一次运行会报跨域错误 因为没有为post设置请求头
             }

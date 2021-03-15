@@ -1,0 +1,77 @@
+<!-- ajax 取消请求 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #result{
+        width: 200px;
+        height: 400px;
+        border: 1px solid black;
+    }
+</style>
+
+<body>
+    <button id="button">发送请求</button>
+    <button id="button">取消请求</button>
+    <div id="result"></div>
+</body>
+<script>
+    let buttonOn =  document.getElementsByTagName('button')[0]
+    let buttonOn2 =  document.getElementsByTagName('button')[1]
+    let result = document.getElementById('result')
+    console.log(buttonOn);
+    let xhr = null
+    buttonOn.onclick = function(){
+        // 1. 创建ajax请求的对象
+        xhr = new XMLHttpRequest()
+        // 2. 初始化 设置请求的方法和url
+        xhr.open('GET','http://127.0.0.1:8000/await')
+        // 3. 发送请求
+        xhr.send();
+        // 4. 事件棒冰处理服务端返回结果 当 状态 ready的时候
+        //  readystate 时xhr对象的属性
+        /**
+         * 0 未初始化 最开始的值
+         * 1. open方法调用完毕
+         * 2. send方法调用完毕
+         * 3. 服务器返回部分结果
+         * 4. 服务端返回所有结果
+         *
+        */
+        // change 改变
+        /**
+         * 
+        */
+    //    这个函数会触发四次 每次改变触发一次 0->1->2->3->4 当4的时候再处理
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState === 4){
+                // 表示返回了所有结果
+                // 判断响应状态码 200你404 403 401 500 2XX都是成功
+                if(xhr.status>=200 && xhr.status<300){
+                    // 处理服务端响应的结果 包含四个部分 行 头 （空行） 体 
+                    // 1. 响应行 
+                    console.log(xhr.status); //状态码
+                    console.log(xhr.statusText); //响应字符串
+                    console.log(xhr.getAllResponseHeaders()); //所有的响应头
+                    console.log(xhr.response); //响应体
+                    result.innerHTML = xhr.response
+                }else{
+
+                }
+            }
+        }
+
+    }
+    buttonOn2.onclick = function(){
+        // 1. 创建ajax请求的对象
+       xhr.abort()
+    } 
+    // 重复发送请求
+    //  点击的时候先检测有没有相同请求 如果有 把之前的取消掉 然后重新发
+ </script>
+</html>

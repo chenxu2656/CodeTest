@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax json</title>
+</head>
+<style>
+    #result{
+        width: 100px;
+        height: 200px;
+        border: 1px solid black;
+    }
+</style>
+<body>
+    <div id="result">
+<!-- 鼠标悬浮发post请求   -->
+    </div>
+</body>
+<script>
+        const result = document.getElementById('result')
+    window.onkeydown = ()=>{
+        // 发送请求
+        const xhr = new XMLHttpRequest()
+        xhr.responseType = 'json'
+        xhr.open('GET','http://127.0.0.1:8000/json-server')
+        xhr.send()
+        xhr.onreadystatechange = ()=>{
+            if(xhr.readyState === 4){
+                if(xhr.status>=200 && xhr.status<300){
+                    result.innerHTML = xhr.response
+                    // 得到字符串，1. 手动进行转换 编程对象
+                    // console.log(JSON.parse(xhr.response));
+                    // 也可以自动转换 借助于 xhr上的属性 设置响应体数据类型 26hang
+                    console.log(xhr.response);
+                }
+
+            }
+        }
+    }
+</script>
+</html>

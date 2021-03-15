@@ -1,0 +1,54 @@
+<!-- ajax 取消请求 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #result{
+        width: 200px;
+        height: 400px;
+        border: 1px solid black;
+    }
+</style>
+
+<body>
+    <button id="button">发送请求</button>
+    <button id="button">取消请求</button>
+    <div id="result"></div>
+</body>
+<script>
+    let buttonOn =  document.getElementsByTagName('button')[0]
+    let buttonOn2 =  document.getElementsByTagName('button')[1]
+    let result = document.getElementById('result')
+    console.log(buttonOn);
+    let xhr = null
+    let issending = false
+    buttonOn.onclick = function(){
+        if(issending) x.abort();
+        xhr = new XMLHttpRequest()
+        issending = true
+        xhr.open('GET','http://127.0.0.1:8000/await')
+        xhr.send();
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState === 4){
+                issending = false //表示已经成功了
+                if(xhr.status>=200 && xhr.status<300){
+                    
+                    result.innerHTML = xhr.response
+                }else{
+                }
+            }
+        }
+    }
+    buttonOn2.onclick = function(){
+        // 1. 创建ajax请求的对象
+       xhr.abort()
+    } 
+    // 重复发送请求
+    //  点击的时候先检测有没有相同请求 如果有 把之前的取消掉 然后重新发
+ </script>
+</html>
